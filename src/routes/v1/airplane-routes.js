@@ -13,8 +13,11 @@ router.post('/',
 
 
 // api/v1/airplanes GET Request
-router.get('/',
-   
-    AirplaneController.getAirplanes);
+router.get('/',AirplaneController.getAirplanes);
+
+
+// /api/v1/airplanes/:id
+ router.get('/:id', AirplaneController.getAirplane);
+
 
 module.exports = router;

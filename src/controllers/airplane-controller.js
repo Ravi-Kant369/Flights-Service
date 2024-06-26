@@ -4,7 +4,7 @@ const { AirplaneService } = require('../services');
 
 const { SuccessResponse, ErrorResponse } = require('../utils/common');
 /**
- * POST : /airplane
+ * POST : /airplanes
  * req-body {modelNumber: 'airbusa320', capacity: 200}
  * 
  *  
@@ -33,6 +33,13 @@ async function createAirplane(req,res){
 
 }
 
+/**
+ * GET  : /airplanes 
+ * req-body {}
+ * 
+ *  
+ */
+
 async function getAirplanes(req,res){
 
     try {
@@ -49,10 +56,32 @@ async function getAirplanes(req,res){
     }
 }
 
+/**
+ *  GET : /airplane/:id     
+ *  req-body {}
+ * 
+ *  
+ */
 
+async function getAirplane(req,res){
+
+    try {
+        const airplanes = await AirplaneService.getAirplane(req.params.id); // in url we have id property and acces we use req.params.id
+        SuccessResponse.data = airplanes;
+        return res
+                  .status(StatusCodes.OK)
+                  .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res 
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
 
 
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplane
 } 
