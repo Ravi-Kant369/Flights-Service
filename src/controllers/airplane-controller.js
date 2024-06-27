@@ -102,9 +102,37 @@ async function destroyAirplane(req,res){
     }
 }
 
+/**
+ *  PATCH : /airplane/:id     
+ *  req-body {ModelNumber:'boing777','capacity': 250}
+ * 
+ *  
+ */
+
+async function updateAirplane(req,res){
+    try {
+       
+        const airplane = await AirplaneService.updateAirplane(req.params.id, req.body); // in url we have id property and acces we use req.params.id
+        SuccessResponse.data = airplane;
+        return res
+                  .status(StatusCodes.OK)
+                  .json(SuccessResponse);
+    } catch (error) {
+       
+        ErrorResponse.error = error;
+
+        return res 
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
+
+
 module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane
 } 
