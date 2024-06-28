@@ -17,7 +17,7 @@ router.delete('/:id', CityController.destroyCity);
 
 //refering -> /api/v1/cities   PATCH
 router.patch('/:id', 
-    CityMiddlewares.validateCreateRequest,
+    CityMiddlewares.validateUpdateRequest,
     CityController.updateCity);
 
 
