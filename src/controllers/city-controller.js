@@ -65,7 +65,11 @@ async function destroyCity(req,res){
 async function updateCity(req,res){
     try {
        
-        const city= await CityService.updateCity(req.params.id, req.body); // in url we have id property and acces we use req.params.id
+        const city= await CityService.updateCity(req.params.id,
+            {
+                name: req.body.name
+            }
+        ); // in url we have id property and acces we use req.params.id
         SuccessResponse.data = city;
         return res
                   .status(StatusCodes.OK)

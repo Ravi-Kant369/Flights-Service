@@ -1,19 +1,24 @@
 const express = require('express');
 
 const { CityController } = require('../../controllers');
+const { CityMiddlewares } = require('../../middlewares');
 const router = express.Router();
 
-//const { AirplaneMiddlewares } = require('../../middlewares');
+
 
 
 //refering -> /api/v1/airplanes  which POST request
-router.post('/', CityController.createCity);
+router.post('/', 
+    CityMiddlewares.validateCreateRequest,
+    CityController.createCity);
 
 //refering -> /api/v1/cities  DELETE
 router.delete('/:id', CityController.destroyCity);
 
 //refering -> /api/v1/cities   PATCH
-router.patch('/:id', CityController.updateCity);
+router.patch('/:id', 
+    CityMiddlewares.validateCreateRequest,
+    CityController.updateCity);
 
 
 module.exports = router;
