@@ -12,6 +12,7 @@ const router = express.Router();
 //refering -> /api/v1/flights  which POST request
 router.post('/',
     FlightMiddlewares.validateCreateRequest,
+    FlightMiddlewares.validateDateTime,
     FlightController.createFlight
 );
 

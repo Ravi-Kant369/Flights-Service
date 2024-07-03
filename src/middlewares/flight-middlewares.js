@@ -4,6 +4,8 @@ const {ErrorResponse} = require('../utils/common');
 
 const AppError = require('../utils/errors/app-error');
 
+const DateTimeCompare = require('../utils/helper/datetime-helper');
+
 function validateCreateRequest(req, res, next){
       if(!req.body.flightNumber){
           ErrorResponse.message = 'Something went wrong while creating Flight';
@@ -90,23 +92,42 @@ function validateCreateRequest(req, res, next){
 
 }
 
+function validateDateTime(req, res, next){
+    const flightArrivalTime = req.body.arrivalTime;
+    const flightDepartureTimre = req.body.departureTime;
 
-// function validateUpdateRequest(req, res, next){
-   
-//     if(!req.body.name && !req.body.code && !req.body.cityId && !req.body.address){
-//         ErrorResponse.message = 'Something went wrong while updating airport';
-       
-//         ErrorResponse.error =   new AppError(['None of the parameters (name, code, cityId and address) found in the incoming request in the correct form'], StatusCodes.BAD_REQUEST);
-//         return res
-//                 .status(StatusCodes.BAD_REQUEST)
-//                 .json(ErrorResponse);
-//     }
-//    next();
+    if(new Date(flightArrivalTime) == 'Invalid Date' || new Date(flightDepartureTimre) == 'Invalid Date'){
+        ErrorResponse.message = 'Failed to create a Flight';
+        ErrorResponse.error = new AppError(
+          ['Please enter the Departure Time OR Arrival Time in the correct format'],
+          StatusCodes.BAD_REQUEST
+        );
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
 
-// }
+    if(!DateTimeCompare.compareTime(flightArrivalTime, flightDepartureTimre)){
+        ErrorResponse.message = 'Failed to create a Flight';
+        ErrorResponse.error = new AppError(
+          ['The Departure time should be less than the Arrival time'],
+          StatusCodes.BAD_REQUEST
+        );
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
+   next();
+
+
+}
+
+
+
 
 
 module.exports = {
     validateCreateRequest,
-    //validateUpdateRequest
+    validateDateTime
+
 }
