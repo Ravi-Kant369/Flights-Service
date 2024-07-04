@@ -14,7 +14,7 @@ class FlightRepository extends CrudRepository { //all the basic CRUD functiinali
         const response = await flight.findAll({
             where: filter,
             order: sort,
-            include: [
+            include: [ 
                 {   // do mapping on primary key 
 
                     // Eager Loading - Eager Loading is the act of querying data of several models at once (one 'main' model and one or more associated models). At the SQL level, this is a query with one or more joins.
