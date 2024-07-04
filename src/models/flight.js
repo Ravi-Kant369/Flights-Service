@@ -17,12 +17,14 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsTo(models.Airport,{
         foreignKey:'departureAirportId',
+        as: 'departureAirport', // when u mention this alias sequelize know thats this the assoaciation u want to refer 
         onDelete:'cascade'
 
       });
 
       this.belongsTo(models.Airport,{
         foreignKey:'arrivalAirportId',
+        as: 'arrivalAirport',
         onDelete:'cascade'
       });
 
